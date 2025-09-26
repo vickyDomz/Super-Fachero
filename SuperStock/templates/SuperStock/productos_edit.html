@@ -1,0 +1,19 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'productos_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'productos_new' in request.path %}bg-success{% endif %}" href="{% url 'productos_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Agregue o edite Producto:</h3>
+        <form method="POST" class="post-form">{% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+    </div>
+{% endblock %}

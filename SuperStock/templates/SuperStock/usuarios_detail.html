@@ -1,0 +1,13 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div style="font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif">
+        <a href="{% url 'usuarios_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Usuarios</h3>
+        <h4>Nombre: {{ usuarios.nombreU }}</h4>
+        <h4>Cargo: {{ usuarios.cargues }}</h4>
+        <h4>Horario: {{ usuarios.horario }}</h4>
+        <h4>{{ usuarios.fecha_creacion }}</h4>
+
+    </div>
+{% endblock %}

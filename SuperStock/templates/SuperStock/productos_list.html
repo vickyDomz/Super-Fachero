@@ -1,0 +1,91 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active bg-success" aria-current="page" href="{% url 'productos_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'productos_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Lista de Productos</h3> <!--Agregar un formulario para buscar productos por el precio (si el precio es mayor a x y menor a y...)({% if categoria.categorias == request.POST.categoria %} selected {% endif %})-->
+        <form action="{% url 'productos_list' %}" method="post">
+            {% csrf_token %}
+                <div style="display: flex; justify-content: space-between; margin-right: 5%;">
+                    <div>
+                        <label for="id_productos">ID</label><br>
+                        <input type="number" id="id_productos" name="id_productos" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="id_categoria">Categorias</label><br>
+                        <select name="id_categoria">
+                            <option value="" {% if not request.POST.categorias %} selected {% endif %}>Mostrar Todos</option>
+                            {% for categoria in categoriass %}
+                                <option value="{{ categoria.categorias }}" {% if categoria.categorias == request.POST.id_categoria %} selected {% endif %}>{{ categoria.categorias }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label for="nombreP">Nombre</label><br>
+                        <input type="text" id="nombreP" name="nombreP" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="precie">Precio:</label><br>
+                        <label for="mayor">Mayor a:</label>
+                        <input type="number" id="mayor" name="mayor" value=""><br>
+                        <label for="menor">Menor a:</label>
+                        <input type="number" id="menor" name="menor" value="">
+                    </div>
+
+                    <div>
+                        <label for="in_active">Activo?</label><br>
+                        <label for="si">si</label>
+                        <input type="checkbox" id="si" name="in_active" value="si"><br>
+                        <label for="no">no</label>
+                        <input type="checkbox" id="no" name="in_active" value="no">
+                    </div>
+
+                    <div>
+                        <input class="buttonUwu" type="submit" value="Aplicar filtros"><br>
+                        <button class="buttonUwu" type="button" style="margin-top: 10px;"><a href="{% url 'productos_list' %}">Resetear</a></button>
+                    </div>
+                </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Precio Costo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            {% for producto in productos %}
+                <tbody>
+                    <tr>
+                        <td scope="col"><a href="{% url 'productos_detail' pk=producto.id_productos %}">{{ producto.id_productos }}</a></td>
+                        <td scope="col">{{ producto.nombreP }}</td>
+                        <td scope="col">{{ producto.id_categorias }}</td>
+                        <td scope="col">{{ producto.precioCost }}</td>
+                        <td scope="col">{{ producto.precio }}</td>
+                        <td scope="col">{{ producto.stock }}</td>
+                        <td>{% if producto.in_active == True %}activo{% else %}inactivo{% endif %}</td>
+                        <td><button type="button" class="buttonUwu"><a href="{% url 'productos_edit' pk=producto.id_productos %}">Edit</a></button>
+                            {% if producto.in_active == True %}<button type="button" class="buttonUwuu"><a href="{% url 'productos_delete' pk=producto.id_productos %}">Borrar</a></button>{% else %}
+                            <button type="button" class="buttonUwuuu"><a href="{% url 'productos_restore' pk=producto.id_productos %}">Restaurar</a></button>{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

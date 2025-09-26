@@ -1,0 +1,98 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active bg-success" aria-current="page" href="{% url 'usuarios_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'usuarios_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Lista de Usuarios</h3>
+        <form action="{% url 'usuarios_list' %}" method="post">
+            {% csrf_token %}
+            <div style="display: flex; justify-content: space-between; margin-right: 5%;">
+                <div>
+                    <label for="id_usuario">ID</label><br>
+                    <input type="number" id="id_usuario" name="id_usuario" value="" placeholder="Buscar...">
+                </div>
+
+                <div>
+                    <label for="nombreU">Nombre:</label><br>
+                    <input type="text" id="nombreU" name="nombreU" value="" placeholder="Buscar...">
+                </div>
+
+                <div>
+                    <label for="cargo">Cargos: </label><br>
+                    <select name="cargo">
+                        <option value="" {% if not request.POST.cargo %} selected {% endif %}>Mostrar todos</option>
+                        {% for cargo in cargoss %}
+                            <option value="{{ cargo.cargos }}" {% if cargo.cargos == request.POST.cargo %} selected {% endif %}>{{ cargo.cargos }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div>
+                    <label>Horarios:</label><br>
+                    <label for="desde">desde:</label>
+                    <select name="desde">
+                        <option value="" {% if not request.POST.desde %} selected {% endif %}>Todos</option>
+                        {% for horario in horarioss %}
+                            <option value="{{ horario.desde }}">{{ horario.desde }} - </option>
+                        {% endfor %}
+                    </select><br>
+                    <label for="hasta">hasta:</label>
+                    <select name="hasta">
+                        <option value="">Todos</option>
+                        {% for horario in horarioss %}
+                            <option value="{{ horario.hasta }}">{{ horario.hasta }}</option>
+                        {% endfor %}
+                    </select>
+                
+                </div>
+
+                <div>
+                    <label for="in_active">Activo?</label><br>
+                    <label for="si">si</label>
+                    <input type="checkbox" id="si" name="in_active" value="si"><br>
+                    <label for="no">no</label>
+                    <input type="checkbox" id="no" name="in_active" value="no">
+                </div>
+
+                <div>
+                    <input class="buttonUwu" type="submit" value="Aplicar filtros"><br>
+                    <button type="button" style="margin-top: 10px;" class="buttonUwu"><a href="{% url 'usuarios_list' %}">Resetear</a></button>
+                </div>
+            </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Cargo</th>
+                    <th scope="col">Horario</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            {% for usuario in usuarios %}
+                <tbody>
+                    <tr>
+                        <td scope="row"><a href="{% url 'usuarios_detail' pk=usuario.pk %}">{{ usuario.id_usuario }}</a></td>
+                        <td>{{ usuario.nombreU }}</td>
+                        <td>{{ usuario.cargues }}</td>
+                        <td>{{ usuario.horario }}</td>
+                        <td>{% if usuario.in_active == True %}activo{% else %}inactivo{% endif %}</td>
+                        <td><button type="button" class="buttonUwu"><a href="{% url 'usuarios_edit' pk=usuario.id_usuario %}">Edit</a></button>
+                            {% if usuario.in_active == True %}<button type="button" class="buttonUwuu"><a href="{% url 'usuarios_delete' pk=usuario.id_usuario %}">Borrar</a></button>{% else %}
+                            <button type="button" class="buttonUwuuu"><a href="{% url 'usuarios_restore' pk=usuario.id_usuario %}">Restaurar</a></button>{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

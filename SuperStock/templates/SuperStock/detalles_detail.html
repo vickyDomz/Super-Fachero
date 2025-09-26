@@ -1,0 +1,19 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'detalles_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles</h3>
+        <div>
+            <ul>
+                <h3><li>{{ detalles.id_detalles_venta }} - {{ detalles.id_venta }}%</li></h3>
+            </ul>
+        </div>
+        <div>
+            <h4>Productos: {{ detalles.id_productos }}</h4>
+            <h4>Cantidad: {{ detalles.cantidad }}</h4>
+            <h4>Fecha y hora: {{ detalles.fecha_creacion }}</h4>
+            <h4>Total: {{ detalles.total }}</h4>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="{% url 'metodos_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'metodos_new' in request.path %}bg-success{% endif %}" href="{% url 'metodos_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Agregue o Edite:</h3>
+        <form method="POST" class="post.form"> {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Guardar</button>
+        </form>
+    </div>
+{% endblock %}

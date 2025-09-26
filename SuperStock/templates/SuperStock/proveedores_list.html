@@ -1,0 +1,80 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active bg-success" aria-current="page" href="{% url 'proveedores_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'proveedores_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Lista de Proveedores</h3>
+        <form method="post" action="{% url 'proveedores_list' %}">
+            {% csrf_token %}
+                <div style="display: flex; justify-content: space-between; margin-right: 5%;">
+
+                    <div>
+                        <label for="id_proveedores">ID</label><br>
+                        <input type="number" id="id_proveedores" name="id_proveedores" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="nombre">Nombre</label><br>
+                        <input type="text" id="nombre" name="nombre" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="fecha">Fecha de Creacion</label><br>
+                        <input type="date" id="fecha" name="fecha" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="in_active">Activo?</label><br>
+                        <label for="si">si</label>
+                        <input type="checkbox" id="si" name="in_active" value="si"><br>
+                        <label for="no">no</label>
+                        <input type="checkbox" id="no" name="in_active" value="no">
+                    </div>
+
+                    <div>
+                        <input type="submit" class="buttonUwu" value="Aplicar Filtros"><br>
+                        <button type="submit" class="buttonUwu" style="margin-top: 10px;"><a href="{% url 'proveedores_list' %}">Resetear</a></button>
+                    </div>
+
+                </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Número de Telefono</th>
+                    <th scope="col">Correo</th>
+                    <th scope="col">Fecha y Hora de Creacion</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            {% for proveedor in proveedores %}
+                <tbody>
+                    <tr>
+                        <td scope="row"><a href="{% url 'proveedores_detail' pk=proveedor.id_proveedores %}">{{ proveedor.id_proveedores }}</a></td>
+                        <td>{{ proveedor.nombrePEE }}</td>
+                        <td>{{ proveedor.direccion }}</td>
+                        <td>{{ proveedor.telefono }}</td>
+                        <td>{{ proveedor.email }}</td>
+                        <td>{{ proveedor.fecha_creacion|date:"d-m-Y H:i" }}</td>
+                        <td>{% if proveedor.in_active == True %}activo{% else %}inactivo{% endif %}</td>
+                        <td><button type="button" class="buttonUwu"><a href="{% url 'proveedores_edit' pk=proveedor.id_proveedores %}">Edit</a></button>
+                            {% if proveedor.in_active == True %}<button type="button" class="buttonUwuu"><a href="{% url 'proveedores_delete' pk=proveedor.id_proveedores %}">Borrar</a></button>{% else %}
+                            <button type="button" class="buttonUwuuu"><a href="{% url 'proveedores_restore' pk=proveedor.id_proveedores %}">Restaurar</a></button>{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}

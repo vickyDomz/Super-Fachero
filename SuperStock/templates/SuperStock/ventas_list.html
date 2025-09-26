@@ -1,0 +1,90 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active bg-success" aria-current="page" href="{% url 'ventas_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'ventas_new' %}">Agregar</a>
+            </li>
+        </ul>                
+        <h3>Registro de Ventas</h3>
+        <form method="post" action="{% url 'ventas_list' %}">
+            {% csrf_token %}
+                <div style="display: flex; justify-content: space-between; margin-right: 5%;">
+                    <div>
+                        <label for="id_ventas">ID</label><br>
+                        <input type="number" id="id_ventas" name="id_ventas" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="clientes">Clientes</label><br>
+                        <input type="text" id="clientes" name="clientes" value="" placeholder="Buscar...">
+                    </div>
+
+                    <div>
+                        <label for="metodo">Metodo de Pago</label><br>
+                        <select name="metodo">
+                            <option value=""></option>
+                            {% for metode in metodes %}
+                                {% if metode.in_active == True %}<option value="{{ metode.metodos }}">{{ metode.metodos }}</option>{% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="fecha">Fecha</label><br>
+                        <input type="date" id="fecha" name="fecha" value="">
+                    </div>
+
+                    <div>
+                        <label for="in_active">Activo?</label><br>
+                        <label for="si">si</label>
+                        <input type="checkbox" id="si" name="in_active" value="si"><br>
+                        <label for="no">no</label>
+                        <input type="checkbox" id="no" name="in_active" value="no">
+                    </div>
+
+                    <div>
+                        <input type="submit" class="buttonUwu" value="Aplicar filtros">
+                        <button type="button" class="buttonUwu" style="margin-top: 10px;"><a href="{% url 'ventas_list' %}">Resetear</a></button>
+                    </div>
+                </div>
+        </form>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Cliente</th>
+                    <th scope="col">Usuario</th>
+                    <th scope="col">Metodo de Pago</th>
+                    <th scope="col">Fecha y Hora</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Estado</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            {% for venta in ventas %}
+                <tbody>
+                    <tr>
+                        <td scope="row"><a href="{% url 'ventas_detail' pk=venta.id_ventas %}">{{ venta.id_ventas }}</a></td>
+                        <td>{{ venta.id_clientes.ci_o_ruc }}</td>
+                        <td>{{ venta.id_usuario }}</td>
+                        <td>{{ venta.id_metodos }}</td>
+                        <td>{{ venta.fecha_hora|date:"d-m-Y H:i" }}</td>
+                        <td>{{ venta.total }}</td>
+                        <td>{% if venta.in_active == True %}activo{% else %}inactivo{% endif %}</td>
+                        <td><button type="button" class="buttonUwu"><a href="{% url 'ventas_edit' pk=venta.id_ventas %}">Edit</a></button>
+                            {% if venta.in_active == True %}<button type="button" class="buttonUwuu"><a href="{% url 'ventas_delete' pk=venta.id_ventas %}">Borrar</a></button>{% else %}
+                            <button type="button" class="buttonUwuuu"><a href="{% url 'ventas_restore' pk=venta.id_ventas %}">Restaurar</a></button>{% endif %}
+                        </td>
+                    </tr>
+                </tbody>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+<!--                <h4><a href="{% url 'ventas_detail' pk=venta.id_ventas %}"><li>{{ venta.id_clientes }}</il></a></h4>
+-->

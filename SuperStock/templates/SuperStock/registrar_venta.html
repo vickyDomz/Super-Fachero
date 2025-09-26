@@ -1,0 +1,49 @@
+{% extends 'SuperStock/base.html' %}
+
+
+{% block content %}
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Venta</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Registrar Venta</h1>
+
+<form id="ventaForm" method="POST">
+    {% csrf_token %}
+    
+    {{ form.as_p }}  <!-- Renderizamos el formulario Django -->
+
+    <button type="submit">Registrar Venta</button>
+</form>
+
+<p>Total venta: <span id="total-venta">0</span></p>
+
+<script>
+    $(document).ready(function() {
+        $('#ventaForm').submit(function(event) {
+            event.preventDefault();  // Evitar el envío tradicional del formulario
+
+            $.ajax({
+                url: '{% url "registrar_venta" %}',  // Asegúrate de que esta URL esté configurada correctamente en tus urls.py
+                method: 'POST',
+                data: $(this).serialize(),  // Serializamos el formulario para enviarlo
+                success: function(response) {
+                    $('#total-venta').text(response.total_venta);  // Actualizar el total de la venta en el HTML
+                    alert('Venta registrada correctamente!');
+                },
+                error: function(error) {
+                    alert('Hubo un error al registrar la venta.');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'metodos_list' %}"><h2>Metodos de Pago</h2></a>
+        <h3>Detalles del Metodo: {{ metodos.metodos }}</h3>
+        <h4>Descripcion: {{ metodos.descripcion }}</h4>
+    </div>
+{% endblock %}

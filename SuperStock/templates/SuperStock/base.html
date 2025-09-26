@@ -1,0 +1,75 @@
+{% load static %}
+
+<html>
+    <head>
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+      <link rel="stylesheet" href="{% static 'css/SuperStock.css' %}?v=1.9">
+      <link rel="icon" href="{% static 'img/logo.png' %}">
+      <meta lang="es">
+      <title>Super Fachero ʕ•́ᴥ•̀ʔっ</title>
+    </head>
+    <body>
+      <div>
+        <nav class="navbar bg-body-tertiary page-header sticky-top">
+          <div class="container header">
+            <a class="navbar-brand" href="{% url 'paginaprincipal' %}">
+              <img class="logo" src="{% static 'img/logo.png' %}" alt="logo" width="30" height="24">
+            </a>
+            <a href="{% url 'paginaprincipal' %}"><h3 class="titulo">Super Fachero ʕ•́ᴥ•̀ʔっ</h3></a>
+          </div>
+        </nav>
+        <div>
+          <ul class="nav flex-column col-md-2 navbar-1">
+            <li class="nav-item">
+              <a class="nav-link {% if 'paginaprincipal' in request.path %}bg-success{% endif %}" aria-current="page" href="{% url 'paginaprincipal' %}">Pagina Principal</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'usuarios' in request.path %}bg-success{% endif %}" href="{% url 'usuarios_list' %}">Usuarios</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'cargos' in request.path %}bg-success{% endif %}" href="{% url 'cargos_list' %}">Cargos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'categorias' in request.path %}bg-success{% endif %}" href="{% url 'categorias_list' %}">Categorias</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'productos' in request.path %}bg-success{% endif %}" href="{% url 'productos_list' %}">Productos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'clientes' in request.path %}bg-success{% endif %}" href="{% url 'clientes_list' %}">Clientes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'metodos' in request.path %}bg-success{% endif %}" href="{% url 'metodos_list' %}">Metodos de Pago</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'descuentos' in request.path %}bg-success{% endif %}" href="{% url 'descuentos_list' %}">Descuentos</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'descuento' in request.path and 'cargos' not in request.path and 'descuentos' not in request.path %}bg-success{% endif %}" href="{% url 'descuento_list' %}">Tipos de descuentos</a> <!--brlbrlrblrblrblrb-->
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'ventas' in request.path %}bg-success{% endif %}" href="{% url 'ventas_list' %}">Ventas</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'detalles' in request.path %}bg-success{% endif %}" href="{% url 'detalles_list' %}">Detalles de Venta</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'inventario' in request.path %}bg-success{% endif %}" href="{% url 'inventario_list' %}">Inventario</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'proveedores' in request.path %}bg-success{% endif %}" href="{% url 'proveedores_list' %}">Proveedores</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link {% if 'horarios' in request.path %}bg-success{% endif %}" href="{% url 'horarios_list' %}">Horarios de Trabajo</a>
+            </li>
+          </ul>   
+        </div>           
+            <div class="col-md-10">
+            {% block content %}
+            {% endblock %}
+            </div>
+      </div>
+    </body>
+</html>
+

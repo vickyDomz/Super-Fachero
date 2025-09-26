@@ -1,0 +1,12 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'horarios_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles de Horarios de Trabajo</h3>
+        <div>
+            <h4>Desde: {{ horarios.desde }}</h4>
+            <h4>Hasta: {{ horarios.hasta }}</h4>
+        </div>
+    </div>
+{% endblock %}

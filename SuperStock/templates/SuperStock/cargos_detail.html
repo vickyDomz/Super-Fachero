@@ -1,0 +1,11 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'cargos_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles de Cargo</h3>
+        <h4><li>Cargo: {{ cargos.cargos }}</li></h4>
+        <h5>Descripcion: {{ cargos.descripcion }}</h5>
+
+    </div>
+{% endblock %}

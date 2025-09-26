@@ -1,0 +1,14 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'inventario_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles de Inventario</h3>
+        <div>
+            <h4>{{ inventario.id_inventario }}. Producto: {{ inventario.id_productos }}</h4>
+            <h4>Proveefor: {{ inventario.id_proveedores }}</h4>
+            <h4>Cantidad recibida: {{ inventario.cantidad }}</h4>
+            <h4>Fecha de Entrada: {{ inventario.fecha_entrada }}</h4>
+        </div>
+    </div>
+{% endblock %}

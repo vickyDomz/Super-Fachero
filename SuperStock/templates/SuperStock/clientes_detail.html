@@ -1,0 +1,11 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <h3><a href="{% url 'clientes_list' %}">Clientes</a></h3>
+        <h4>Detalles de Cliente</h4>
+        <h4>Nombre y Apellido: {{ clientes.nombreC }} {{ clientes.apellido }}</h4>
+        <h4>RUC: {{ clientes.ci_o_ruc }}</h4>
+        <h4>Fecha y Hora: {{ clientes.fecha_creacion }}</h4>
+    </div>
+{% endblock %}

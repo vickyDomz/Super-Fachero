@@ -1,0 +1,81 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+              <a class="nav-link active bg-success" aria-current="page" href="{% url 'clientes_list' %}">Lista</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'clientes_new' %}">Agregar</a>
+            </li>
+        </ul>            
+            <h3>Clientes Registrados</h3>
+            <form action="{% url 'clientes_list' %}" method="post">
+                {% csrf_token %}
+                    <div style="display: flex; justify-content: space-between; margin-right: 5%;">
+                        <div>
+                            <label for="id_clientes">ID</label><br>
+                            <input type="number" id="id_clientes" name="id_clientes" value="" placeholder="Buscar...">
+                        </div>
+
+                        <div>
+                            <label for="nombres">Nombre</label><br>
+                            <input type="text" id="nombres" name="nombres" value="" placeholder="Buscar...">
+                        </div>
+
+                        <div>
+                            <label for="apellido">Apellido</label><br>
+                            <input type="text" id="apellido" name="apellido" value="" placeholder="Buscar...">
+                        </div>
+
+                        <div>
+                            <label for="ci_ruc">RUC</label><br>
+                            <input type="number" id="ci_ruc" name="ci_ruc" value="" placeholder="Buscar...">
+                        </div>
+
+                        <div>
+                            <label for="in_active">Activo?</label><br>
+                            <label for="si">si</label>
+                            <input type="checkbox" id="si" name="in_active" value="si"><br>
+                            <label for="no">no</label>
+                            <input type="checkbox" id="no" name="in_active" value="no">
+                        </div>
+
+                        <div>
+                            <input type="submit" class="buttonUwu" value="Aplicar filtros"><br>
+                            <button type="button" class="buttonUwu" style="margin-top: 10px;"><a href="{% url 'clientes_list' %}">Resetear</a></button>
+                        </div>
+                    </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scopt="col">RUC</th>
+                        <th scope="col">Fecha de Creacion</th>
+                        <th scope="col">Estado</th>
+                        <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                {% for cliente in clientes %}
+                    <tbody>
+                        <tr>
+                            <td scope="row"><a href="{% url 'clientes_detail' pk=cliente.id_clientes %}">{{ cliente.id_clientes }}</a></td>
+                            <td>{{ cliente.nombreC }}</td>
+                            <td>{{ cliente.apellido }}</td>
+                            <td>{{ cliente.ci_o_ruc }}</td>
+                            <td>{{ cliente.fecha_creacion|date:"d-m-Y H:i" }}</td>
+                            <td>{% if cliente.in_active == True %}activo{% else %}inactivo{% endif %}</td>
+                            <td><button type="button" class="buttonUwu"><a href="{% url 'clientes_edit' pk=cliente.id_clientes %}">Edit</a></button>
+                                {% if cliente.in_active == True %}<button type="button" class="buttonUwuu"><a href="{% url 'clientes_delete' pk=cliente.id_clientes %}">Borrar</a></button>{% else %}
+                                <button type="button" class="buttonUwuuu"><a href="{% url 'clientes_restore' pk=cliente.id_clientes %}">Restaurar</a></button>{% endif %}
+                            </td>
+                        </tr>
+                    </tbody>
+                {% endfor %} 
+            </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'ventas_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles de la Venta</h3>
+        <h4>Nombre: {{ ventas.id_clientes }}</h4>
+        <h4>RUC: {{ ventas.id_clientes.ci_o_ruc }}</h4>
+        <h4>Cajero/a: {{ ventas.id_usuario }}</h4>
+        <h4>Metodo de Pago: {{ ventas.id_metodos }}</h4>
+        <h4>Fecha y hora: {{ ventas.fecha_hora }}</h4>
+        <h4>Total: {{ ventas.total }} Gs</h4>
+    </div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'productos_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles del Producto:</h3>
+        <h4>Nombre: {{ productos.nombreP }}</h4>
+        <h4>Categoria: {{ productos.id_categorias }}</h4>
+        <h4>Stock: {{ productos.stock }}</h4>
+        <h4>Precio de Compra(GS): {{ productos.precioCost }}</h4>
+        <h4>Precio de Venta(Gs): {{ productos.precio }}</h4>
+    </div>
+{% endblock %}

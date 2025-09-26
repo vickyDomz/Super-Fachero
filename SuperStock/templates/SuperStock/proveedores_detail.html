@@ -1,0 +1,18 @@
+{% extends 'SuperStock/base.html' %}
+
+{% block content %}
+    <div>
+        <a href="{% url 'proveedores_list' %}"><h6>&lt; volver</h6></a>
+        <h3>Detalles del Proveedor</h3>
+        <div>   
+            <ul>
+                <li>{{ proveedores.id_proveedores }}. Nombre: {{ proveedores.nombrePEE }}</li>
+            </ul>
+        </div>
+        <div>
+            <p>Direccion: {{ proveedores.direccion }}</p>
+            <p>Nro de Telefono: {{ proveedores.telefono }}</p>
+            <p>Correo: {{ proveedores.email }}</p>
+        </div>
+    </div>
+{% endblock %}
